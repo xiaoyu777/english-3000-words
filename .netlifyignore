@@ -5,3 +5,13 @@ README.md
 supabase.sql
 scripts/
 【高考拔高】3000词.pdf
+Github_Codex_Tokens.txt
+Github_API_key.txt
+Netlify_API_key.txt
+*.key
+*_key.txt
+*_api_key*
+*API_key*
+*token*
+*Token*
+*TOKEN*
