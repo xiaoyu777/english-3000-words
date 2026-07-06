@@ -14,3 +14,6 @@ Github_API_key.txt
 *.key
 *_api_key*
 *token*
+Netlify_API_key.txt
+*_key.txt
+*API_key*
