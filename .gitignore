@@ -1,0 +1,16 @@
+.DS_Store
+.netlify/
+.claude/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.*
+
+# 受版权原书 PDF，不入库
+*.pdf
+Github_API_key.txt
+*.key
+*_api_key*
+*token*

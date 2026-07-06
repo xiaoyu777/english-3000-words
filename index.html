@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>3000词 · 高考拔高</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css?v=16" />
+</head>
+<body>
+  <!-- 顶栏 -->
+  <header id="topbar">
+    <button id="backBtn" class="icon-btn" hidden aria-label="返回">‹</button>
+    <div id="topTitle">3000词 · Day 1</div>
+    <button id="menuBtn" class="icon-btn" aria-label="重置" title="设置/重置">⋯</button>
+  </header>
+
+  <!-- 主内容区，各屏幕挂载于此 -->
+  <main id="app"></main>
+
+  <!-- 底部导航 -->
+  <nav id="tabbar">
+    <button class="tab active" data-nav="home"><span class="ti">🏠</span><span>首页</span></button>
+    <button class="tab" data-nav="learn"><span class="ti">📖</span><span>学习</span></button>
+    <button class="tab" data-nav="test"><span class="ti">✅</span><span>考核</span></button>
+    <button class="tab" data-nav="produce"><span class="ti">✍️</span><span>进阶</span></button>
+    <button class="tab" data-nav="assess"><span class="ti">📊</span><span>评估</span></button>
+    <button class="tab" data-nav="review"><span class="ti">🔁</span><span>错题本</span></button>
+  </nav>
+
+  <!-- 模板：难度徽章说明弹层 / 通用弹层 -->
+  <div id="sheet" class="sheet" hidden>
+    <div class="sheet-panel">
+      <div id="sheetBody"></div>
+      <button id="sheetClose" class="btn ghost full">关闭</button>
+    </div>
+  </div>
+
+  <!-- Supabase 云端已接入（CLOUD.backend = 'supabase'） -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="data/day1.js?v=16"></script>
+  <script src="data/day2.js?v=16"></script>
+  <script src="data/day3.js?v=16"></script>
+  <script src="data/day4.js?v=16"></script>
+  <script src="data/day5.js?v=16"></script>
+  <script src="data/day6.js?v=16"></script>
+  <script src="data/day7.js?v=16"></script>
+  <script src="data/day8.js?v=16"></script>
+  <script src="data/day9.js?v=16"></script>
+  <script src="data/day10.js?v=16"></script>
+  <script src="data/day11.js?v=16"></script>
+  <script src="data/day12.js?v=16"></script>
+  <script src="data/day13.js?v=16"></script>
+  <script src="data/day14.js?v=16"></script>
+  <script src="data/day15.js?v=16"></script>
+  <script src="data/day16.js?v=16"></script>
+  <script src="data/day17.js?v=16"></script>
+  <script src="data/day18.js?v=16"></script>
+  <script src="data/day19.js?v=16"></script>
+  <script src="data/day20.js?v=16"></script>
+  <script src="data/day21.js?v=16"></script>
+  <script src="data/day22.js?v=16"></script>
+  <script src="data/day23.js?v=16"></script>
+  <script src="data/day24.js?v=16"></script>
+  <script src="data/day25.js?v=16"></script>
+  <script src="data/day26.js?v=16"></script>
+  <script src="data/day27.js?v=16"></script>
+  <script src="data/day28.js?v=16"></script>
+  <script src="data/day29.js?v=16"></script>
+  <script src="data/day30.js?v=16"></script>
+  <script src="app.js?v=16"></script>
+  <script>
+    // 仅在 http/https 托管环境注册离线缓存；本地 file:// 直接打开会跳过（不影响使用）
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>

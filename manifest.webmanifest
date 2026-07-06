@@ -1,0 +1,19 @@
+{
+  "name": "3000词 · 高考拔高",
+  "short_name": "3000词",
+  "description": "高考拔高3000词 · 学习-考核-反馈，含遗忘曲线间隔复习",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6fb",
+  "theme_color": "#2563eb",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
