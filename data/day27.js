@@ -27,7 +27,7 @@ window.VOCAB_DATA.days[27] = {
     { no: 2618, word: "these", level: 0, gloss: "这些", en: "(These) flowers are the ones I picked from the garden yesterday.", zh: "这些花是我昨天从花园里摘的。" },
     { no: 2619, word: "contact", level: 1, gloss: "联系；交际；熟人", en: "You can (contact) customer service by phone or email for assistance.", zh: "您可以通过电话或电子邮件联系客服寻求帮助。" },
     { no: 2620, word: "roast", level: 2, gloss: "烤肉；烘烤；嘲笑", en: "He prepared a delicious (roast) chicken for the family dinner.", zh: "他为家庭晚餐准备了美味的烤鸡。" },
-    { no: 2621, word: "green", level: 0, gloss: "春天", en: "The leaves on the trees were a vibrant shade of (green) in the spring.", zh: "春天，树上的叶子是鲜艳的绿色。" },
+    { no: 2621, word: "green", level: 0, gloss: "绿色；绿色的", en: "The leaves on the trees were a vibrant shade of (green) in the spring.", zh: "春天，树上的叶子是鲜艳的（绿色）。" },
     { no: 2622, word: "circuit", level: 2, gloss: "电路；环道；巡回", en: "The electrician repaired the broken (circuit) to restore power to the house.", zh: "电工修好了断掉的电路，恢复了房屋供电。" },
     { no: 2623, word: "sand", level: 0, gloss: "沙；沙子；沙滩", en: "The children built a castle using (sand) at the beach.", zh: "孩子们在海滩上用沙子建造了一座城堡。" },
     { no: 2624, word: "fridge (refrigerator)", level: 0, gloss: "电冰箱", en: "She keeps leftovers in the (fridge) to eat later during the week.", zh: "她把剩菜放在冰箱里，等到下周再吃。" },

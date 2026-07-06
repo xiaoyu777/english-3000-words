@@ -52,7 +52,7 @@ window.VOCAB_DATA.days[19] = {
     { no: 1843, word: "comment", level: 1, gloss: "评论", en: "She left a positive (comment) on the blog post to show her support.", zh: "她在博客文章上留下了积极的（评论）以表示支 持。" },
     { no: 1844, word: "teenager", level: 1, gloss: "青少年", en: "The (teenager) struggled to balance schoolwork with extracurricular activities.", zh: "（青少年）努力平衡学业和课外活动。" },
     { no: 1845, word: "introduce", level: 0, gloss: "介绍；引入；采用", en: "Let me (introduce) you to my colleague, who is an expert in marketing.", zh: "让我把你介绍给我的同事，他是营销专家。" },
-    { no: 1846, word: "witness", level: 2, gloss: "在旅途中", en: "They were fortunate to (witness) the rare solar eclipse during their trip.", zh: "在旅途中，他们有幸目睹了罕见的日食。" },
+    { no: 1846, word: "witness", level: 2, gloss: "目睹；见证；证人", en: "They were fortunate to (witness) the rare solar eclipse during their trip.", zh: "在旅途中，他们有幸（目睹）了罕见的日食。" },
     { no: 1847, word: "grandmother (grandma)", level: 0, gloss: "祖母", en: "Her (grandmother) bakes the best apple pies in the family.", zh: "她的（祖母）烤的苹果派是家里最好的。" },
     { no: 1848, word: "ashamed", level: 2, gloss: "惭愧的；羞耻的", en: "He felt (ashamed) after forgetting his friend’s birthday.", zh: "忘记了朋友的生日，他感到很惭愧。" },
     { no: 1849, word: "historic", level: 2, gloss: "历史上著名的；有历史性的", en: "They visited a (historic) battlefield that played a significant role in the war.", zh: "他们参观了一个在战争中发挥重要作用的历史战 场。" },

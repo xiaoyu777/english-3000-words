@@ -64,7 +64,7 @@ window.VOCAB_DATA.days[10] = {
     { no: 955, word: "toy", level: 0, gloss: "玩具；小玩艺儿；小型的东西", en: "The child played with his favorite (toy) truck in the living room.", zh: "孩子在客厅里玩他最喜欢的玩具卡车。" },
     { no: 956, word: "watermelon", level: 0, gloss: "西瓜", en: "They enjoyed slicing a juicy (watermelon) on a hot summer day.", zh: "他们喜欢在炎热的夏天切多汁的西瓜。" },
     { no: 957, word: "bored", level: 0, gloss: "无聊的；烦人的；无趣的", en: "He felt (bored) during the long lecture and started doodling in his notebook.", zh: "他在冗长的讲座中感到无聊，开始在笔记本上涂鸦。" },
-    { no: 958, word: "coast", level: 0, gloss: "假期期间", en: "They took a relaxing walk along the sandy (coast) during their vacation.", zh: "假期期间，他们沿着沙滩悠闲地散步。" },
+    { no: 958, word: "coast", level: 0, gloss: "海岸；海滨", en: "They took a relaxing walk along the sandy (coast) during their vacation.", zh: "假期期间，他们沿着沙质（海岸）悠闲地散步。" },
     { no: 959, word: "if", level: 0, gloss: "如果", en: "(If) it rains tomorrow, we will have to cancel the picnic.", zh: "（如果）明天下雨，我们就不得不取消野餐了。" },
     { no: 960, word: "serve", level: 0, gloss: "供应", en: "The restaurant will (serve) lunch from 12 PM to 2 PM.", zh: "餐厅将从中午 12 点到下午 2 点（供应）午餐。" },
     { no: 961, word: "Canada", level: 0, gloss: "加拿大", en: "(Canada) is known for its stunning landscapes and friendly people.", zh: "加拿大以其壮丽的风景和友好的人民而闻名。" },

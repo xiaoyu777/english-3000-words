@@ -55,7 +55,7 @@ window.VOCAB_DATA.days[18] = {
     { no: 1746, word: "spy", level: 2, gloss: "间谍；侦探；侦察", en: "The (spy) gathered information without being detected during the mission.", zh: "间谍在执行任务期间收集了信息，但没有被发现。" },
     { no: 1747, word: "minister", level: 2, gloss: "部长；牧师；公使", en: "The (minister) delivered an inspiring speech about community development.", zh: "部长发表了关于社区发展的鼓舞人心的演讲。" },
     { no: 1748, word: "cuisine", level: 2, gloss: "烹调风格；烹调法；烹饪", en: "Italian (cuisine) is famous for its delicious pasta and flavorful sauces.", zh: "意大利菜以其美味的意大利面和美味的酱汁而闻名。" },
-    { no: 1749, word: "recite", level: 2, gloss: "他很紧张", en: "He was nervous to (recite) his poem in front of the entire class.", zh: "他很紧张，不敢在全班同学面前背诵他的诗。" },
+    { no: 1749, word: "recite", level: 2, gloss: "背诵；朗诵", en: "He was nervous to (recite) his poem in front of the entire class.", zh: "他很紧张，不敢在全班同学面前（背诵）他的诗。" },
     { no: 1750, word: "author", level: 1, gloss: "作家；作家的著作；创始人", en: "The (author) of the book signed copies for fans at the event.", zh: "这本书的作者在活动中为粉丝签名。" },
     { no: 1751, word: "director", level: 0, gloss: "导演", en: "The (director) of the film received praise for his creative vision and leadership.", zh: "这部电影的（导演）因其创造性的眼光和领导能力而 受到赞扬。" },
     { no: 1752, word: "café", level: 1, gloss: "咖啡馆", en: "They met at the local (café) to enjoy coffee and catch up on each other’s lives.", zh: "他们在当地的（咖啡馆）见面，喝咖啡，聊聊彼此的 生活。" },
@@ -105,7 +105,7 @@ window.VOCAB_DATA.days[18] = {
     { no: 1796, word: "thousand", level: 0, gloss: "千；成千的；许多的", en: "There were (thousand) people at the concert, making it one of the largest events of the year.", zh: "音乐会有千人参加，是一年中最大的活动之一。" },
     { no: 1797, word: "division", level: 2, gloss: "分；分开；除法", en: "The company’s (division) responsible for research and development has introduced several innovative products.", zh: "该公司负责研发的部门推出了几款创新产品。" },
     { no: 1798, word: "affect", level: 2, gloss: "影响；感动；假装", en: "The new rules will (affect) how students apply for financial aid.", zh: "新规定将影响学生申请经济援助的方式。" },
-    { no: 1799, word: "queen", level: 0, gloss: "王后；女王；立为女王", en: "The (queen) addressed her subjects during the annual celebration.", zh: "女王在年度庆典上发表了讲话。" },
+    { no: 1799, word: "queen", level: 0, gloss: "王后；女王；立为女王", en: "The (queen) addressed her subjects during the annual celebration.", zh: "（女王）在年度庆典上发表了讲话。" },
     { no: 1800, word: "ours", level: 0, gloss: "我们的", en: "The decision is (ours), and we need to choose what’s best for everyone involved.", zh: "决定权在我们手中，我们需要选择对每个参与者来说 最好的。 -" },
   ]
 };
