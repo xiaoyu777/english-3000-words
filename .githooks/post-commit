@@ -2,7 +2,5 @@
 repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 log_file="$repo_root/.git/auto-push-deploy.log"
 
-{
-  printf '\n--- post-commit %s ---\n' "$(date '+%Y-%m-%d %H:%M:%S')"
-  sh "$repo_root/scripts/auto_push_deploy.sh"
-} >> "$log_file" 2>&1 &
+printf '\n--- post-commit %s ---\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$log_file"
+sh "$repo_root/scripts/auto_push_deploy.sh" >> "$log_file" 2>&1
