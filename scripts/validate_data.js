@@ -10,6 +10,18 @@ for (let day = 1; day <= 30; day++) {
 
 const days = context.window.VOCAB_DATA && context.window.VOCAB_DATA.days;
 const errors = [];
+const warnings = [];
+
+function glossaryTerms(gloss) {
+  return (gloss || '').split(/[；;，,、/]/)
+    .map(s => s.trim())
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+}
+
+function hasManualZhTarget(zh) {
+  return /[（(][^（）()]+[）)]/.test(zh || '');
+}
 
 if (!days || Object.keys(days).length !== 30) {
   errors.push(`Expected 30 day files, got ${days ? Object.keys(days).length : 0}`);
@@ -28,10 +40,23 @@ for (let day = 1; day <= 30; day++) {
     if (!word.word || !word.en || !word.zh || !word.gloss) errors.push(`Day ${day} #${word.no}: missing required field`);
     if (word.level < 0 || word.level > 2) errors.push(`Day ${day} #${word.no}: invalid level ${word.level}`);
     if (!/\([^)]+\)/.test(word.en)) errors.push(`Day ${day} #${word.no}: sentence missing target marker`);
+    if (!hasManualZhTarget(word.zh)) {
+      const hits = glossaryTerms(word.gloss).filter(term => word.zh.includes(term));
+      if (hits.length > 1) {
+        warnings.push(`Day ${day} #${word.no} ${word.word}: ambiguous zh highlight candidates: ${hits.join(' / ')}`);
+      }
+    }
   }
 }
 
 if (total !== 3000) errors.push(`Expected 3000 total words, got ${total}`);
 
-console.log(JSON.stringify({ days: days ? Object.keys(days).length : 0, total, errors: errors.slice(0, 50), errorCount: errors.length }, null, 2));
+console.log(JSON.stringify({
+  days: days ? Object.keys(days).length : 0,
+  total,
+  errors: errors.slice(0, 50),
+  errorCount: errors.length,
+  warnings: warnings.slice(0, 50),
+  warningCount: warnings.length
+}, null, 2));
 if (errors.length) process.exit(1);

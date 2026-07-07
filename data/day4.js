@@ -39,7 +39,7 @@ window.VOCAB_DATA.days[4] = {
     { no: 330, word: "jeans", level: 1, gloss: "工装裤；牛仔裤", en: "He bought a new pair of (jeans) that fit him perfectly and look stylish.", zh: "他买了一条新牛仔裤，非常适合他，而且看起来很时尚。" },
     { no: 331, word: "race", level: 0, gloss: "种族；人种；赛跑", en: "They decided to (race) to the finish line, cheering each other on as they ran.", zh: "他们决定跑向终点线，一边跑一边互相加油。" },
     { no: 332, word: "ship", level: 0, gloss: "船；舰；以船运送", en: "The cargo (ship) arrived at the port, ready to be unloaded and distributed.", zh: "货物抵达港口，准备卸货和分发。" },
-    { no: 333, word: "decline", level: 2, gloss: "衰退；跌落；下降", en: "The company experienced a (decline) in sales during the economic downturn.", zh: "在经济衰退期间，公司的销售额下降了。" },
+    { no: 333, word: "decline", level: 2, gloss: "衰退；跌落；下降", en: "The company experienced a (decline) in sales during the economic downturn.", zh: "在经济衰退期间，公司的销售额（下降）了。" },
     { no: 334, word: "sale", level: 0, gloss: "出售；卖；拍卖", en: "The store is having a big (sale) this weekend, offering discounts on all items.", zh: "这家商店本周末大减价，所有商品均有折扣。" },
     { no: 335, word: "fist", level: 2, gloss: "拳头；手；拳打", en: "In the boxing match, he landed a powerful punch with his (fist).", zh: "在拳击比赛中，他用拳头打出了一记有力的重拳。" },
     { no: 336, word: "list", level: 0, gloss: "清单", en: "She made a (list) of all the groceries she needed to buy at the store.", zh: "她列出了她需要在商店购买的所有杂货（清单）。" },

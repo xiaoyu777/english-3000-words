@@ -8,7 +8,7 @@ window.VOCAB_DATA.days[7] = {
   title: "考纲第 601–700 词",
   words: [
     { no: 601, word: "missing", level: 0, gloss: "不见的；缺少的", en: "The report highlighted several (missing) documents that needed to be found.", zh: "报告强调了需要找到的几份文件。" },
-    { no: 602, word: "lamp", level: 2, gloss: "灯；照亮", en: "She turned on the (lamp) to illuminate the room during the evening.", zh: "晚上她打开了灯照亮房间。" },
+    { no: 602, word: "lamp", level: 2, gloss: "灯；照亮", en: "She turned on the (lamp) to illuminate the room during the evening.", zh: "晚上她打开了（灯）照亮房间。" },
     { no: 603, word: "option", level: 1, gloss: "选择权；挑选；选项", en: "They were given the (option) to choose between a refund or store credit for the returned item.", zh: "他们可以选择退款或退回商品的商店信用。" },
     { no: 604, word: "consultation", level: 2, gloss: "咨询", en: "They had a (consultation) with a doctor to discuss the best treatment options.", zh: "他们与医生进行了（咨询），讨论最佳治疗方案。" },
     { no: 605, word: "acquire", level: 1, gloss: "获得；学到", en: "It takes time to (acquire) a new skill, especially one as complex as playing the piano.", zh: "获得一项新技能需要时间，尤其是像弹钢琴这样复杂 的技能。" },

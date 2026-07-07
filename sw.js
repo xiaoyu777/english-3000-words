@@ -1,5 +1,5 @@
 /* Service Worker —— 网络优先离线缓存（在线永远拿最新，离线才回退缓存；file:// 打开会自动跳过） */
-const CACHE = 'eng3000-v14';
+const CACHE = 'eng3000-v15';
 const ASSETS = [
   './', './index.html', './styles.css', './app.js',
   './data/day1.js', './data/day2.js', './data/day3.js', './data/day4.js', './data/day5.js',
