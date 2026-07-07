@@ -37,12 +37,24 @@ push_with_git_auth() {
 }
 
 push_with_token_file() {
-  token_file=${GITHUB_TOKEN_FILE:-"$repo_root/Github_Codex_Tokens.txt"}
-  [ -f "$token_file" ] || return 1
-
-  token=$(grep -Eo 'github_pat_[A-Za-z0-9_]+' "$token_file" | head -n 1 || true)
+  token=${GITHUB_TOKEN:-${GH_TOKEN:-}}
   if [ -z "$token" ]; then
-    token=$(grep -Eo 'ghp_[A-Za-z0-9_]+' "$token_file" | head -n 1 || true)
+    if [ -n "${GITHUB_TOKEN_FILE:-}" ]; then
+      token_file=$GITHUB_TOKEN_FILE
+    elif [ -f "$repo_root/Github_Codex_Tokens.txt" ]; then
+      token_file=$repo_root/Github_Codex_Tokens.txt
+    else
+      token_file=$repo_root/Github_Tokens.txt
+    fi
+    [ -f "$token_file" ] || return 1
+
+    token=$(grep -Eo 'github_pat_[A-Za-z0-9_]+' "$token_file" | head -n 1 || true)
+    if [ -z "$token" ]; then
+      token=$(grep -Eo 'ghp_[A-Za-z0-9_]+' "$token_file" | head -n 1 || true)
+    fi
+    if [ -z "$token" ]; then
+      token=$(grep -Eo '[A-Za-z0-9_]{20,}' "$token_file" | head -n 1 || true)
+    fi
   fi
   [ -n "$token" ] || return 1
 
