@@ -65,8 +65,13 @@ EOF
 }
 
 log "Pushing $branch to $remote..."
+default_netlify_mode=git
+if [ -n "${NETLIFY_AUTH_TOKEN:-}" ] || [ -f "${NETLIFY_TOKEN_FILE:-"$repo_root/Netlify_API_key.txt"}" ]; then
+  default_netlify_mode=cli
+fi
+
 if [ "${AUTO_PUSH_DEPLOY_DRY_RUN:-0}" = "1" ]; then
-  log "DRY RUN: would push $branch to $remote, then deploy with Netlify mode ${AUTO_PUSH_DEPLOY_NETLIFY_MODE:-git}."
+  log "DRY RUN: would push $branch to $remote, then deploy with Netlify mode ${AUTO_PUSH_DEPLOY_NETLIFY_MODE:-$default_netlify_mode}."
   exit 0
 fi
 
@@ -84,7 +89,7 @@ if [ "${AUTO_PUSH_DEPLOY_SKIP_NETLIFY:-0}" = "1" ]; then
   exit 0
 fi
 
-deploy_mode=${AUTO_PUSH_DEPLOY_NETLIFY_MODE:-git}
+deploy_mode=${AUTO_PUSH_DEPLOY_NETLIFY_MODE:-$default_netlify_mode}
 site_id=${NETLIFY_SITE_ID:-}
 if [ -z "$site_id" ] && [ -f "$repo_root/.netlify/state.json" ]; then
   site_id=$(sed -n 's/.*"siteId"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$repo_root/.netlify/state.json" | head -n 1)
@@ -114,6 +119,14 @@ fi
 if [ -z "$site_id" ]; then
   log "Netlify site id not found. Set NETLIFY_SITE_ID or run netlify link."
   exit 1
+fi
+
+if [ -z "${NETLIFY_AUTH_TOKEN:-}" ]; then
+  netlify_token_file=${NETLIFY_TOKEN_FILE:-"$repo_root/Netlify_API_key.txt"}
+  if [ -f "$netlify_token_file" ]; then
+    NETLIFY_AUTH_TOKEN=$(grep -Eo '[A-Za-z0-9_-]{20,}' "$netlify_token_file" | head -n 1 || true)
+    export NETLIFY_AUTH_TOKEN
+  fi
 fi
 
 if ! command -v npx >/dev/null 2>&1; then

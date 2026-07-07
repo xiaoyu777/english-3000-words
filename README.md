@@ -129,13 +129,16 @@ git config core.hooksPath .githooks
 ```bash
 AUTO_PUSH_DEPLOY=0                  # 临时关闭整套自动化
 AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1     # 只推送 GitHub，不部署 Netlify
-AUTO_PUSH_DEPLOY_NETLIFY_MODE=git   # 默认：推送 GitHub 后，依赖 Netlify 的 Git 自动部署
+AUTO_PUSH_DEPLOY_NETLIFY_MODE=git   # 推送 GitHub 后，依赖 Netlify 的 Git 自动部署
 AUTO_PUSH_DEPLOY_NETLIFY_MODE=cli   # 用 Netlify CLI 直接生产部署
 AUTO_PUSH_DEPLOY_NETLIFY_MODE=build-hook
 NETLIFY_BUILD_HOOK_URL=...          # build-hook 模式必填
 NETLIFY_SITE_ID=...                 # 未链接 Netlify 时手动指定 site id
 NETLIFY_AUTH_TOKEN=...              # Netlify CLI 非交互部署建议配置
+NETLIFY_TOKEN_FILE=...              # 默认读取本机 Netlify_API_key.txt
 GITHUB_TOKEN_FILE=...               # Git 凭据不可用时，读取本机 token 文件
 ```
+
+默认策略：如果检测到 `NETLIFY_AUTH_TOKEN` 或本机 `Netlify_API_key.txt`，自动使用 `cli` 模式直接生产部署；否则使用 `git` 模式，依赖 Netlify 项目自身的 GitHub 自动部署。
 
 说明：`Github_Codex_Tokens.txt`、`Netlify_API_key.txt`、`.env*` 等敏感文件已被 `.gitignore` 排除，不要提交到仓库。
