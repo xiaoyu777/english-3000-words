@@ -99,3 +99,43 @@ English-3000-words/
 - 修改静态资源后同步提升 `index.html` 的 `?v=` 版本和 `sw.js` 的 `CACHE` 名称。
 - Service Worker 只缓存同源静态资源，不缓存 Supabase、CDN 或其他 API 响应。
 - 公开部署后优先使用 Supabase RPC：前端调用 `learner_get` / `learner_upsert`，表级 anon 权限应收紧。
+
+## 提交后自动推送和部署
+
+本项目提供本地 Git hook：每次 `git commit` 成功后自动执行：
+
+1. 推送当前分支到 GitHub。
+2. 部署到 Netlify。
+
+启用方式：
+
+```bash
+git config core.hooksPath .githooks
+```
+
+脚本位置：
+
+- `.githooks/post-commit`
+- `scripts/auto_push_deploy.sh`
+
+日志位置：
+
+```bash
+.git/auto-push-deploy.log
+```
+
+可选环境变量：
+
+```bash
+AUTO_PUSH_DEPLOY=0                  # 临时关闭整套自动化
+AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1     # 只推送 GitHub，不部署 Netlify
+AUTO_PUSH_DEPLOY_NETLIFY_MODE=git   # 默认：推送 GitHub 后，依赖 Netlify 的 Git 自动部署
+AUTO_PUSH_DEPLOY_NETLIFY_MODE=cli   # 用 Netlify CLI 直接生产部署
+AUTO_PUSH_DEPLOY_NETLIFY_MODE=build-hook
+NETLIFY_BUILD_HOOK_URL=...          # build-hook 模式必填
+NETLIFY_SITE_ID=...                 # 未链接 Netlify 时手动指定 site id
+NETLIFY_AUTH_TOKEN=...              # Netlify CLI 非交互部署建议配置
+GITHUB_TOKEN_FILE=...               # Git 凭据不可用时，读取本机 token 文件
+```
+
+说明：`Github_Codex_Tokens.txt`、`Netlify_API_key.txt`、`.env*` 等敏感文件已被 `.gitignore` 排除，不要提交到仓库。
