@@ -41,10 +41,10 @@ push_with_token_file() {
   if [ -z "$token" ]; then
     if [ -n "${GITHUB_TOKEN_FILE:-}" ]; then
       token_file=$GITHUB_TOKEN_FILE
-    elif [ -f "$repo_root/Github_Codex_Tokens.txt" ]; then
-      token_file=$repo_root/Github_Codex_Tokens.txt
-    else
+    elif [ -f "$repo_root/Github_Tokens.txt" ]; then
       token_file=$repo_root/Github_Tokens.txt
+    else
+      token_file=$repo_root/Github_Codex_Tokens.txt
     fi
     [ -f "$token_file" ] || return 1
 
