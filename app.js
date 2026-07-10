@@ -32,6 +32,23 @@
   let WORDS = [];
   let byId = {};
   let GROUP_COUNT = 1;
+  // 全局词库索引（跨天）：复习中心/到期复习需要聚合所有天，而不只是当前 DAY
+  let ALL_WORDS = [];
+  let allById = {};
+  let globalIndexed = false;
+  function ensureGlobalIndex() {
+    if (globalIndexed) return;
+    const days = (window.VOCAB_DATA && window.VOCAB_DATA.days) || {};
+    availableDays().forEach(d => {
+      const dd = days[d] || {};
+      (dd.words || []).forEach(w => {
+        w.id = 'd' + d + '-' + w.no;   // 与 setActiveDay 同一套 id 规则
+        w.day = d;
+        if (!allById[w.id]) { ALL_WORDS.push(w); allById[w.id] = w; }
+      });
+    });
+    globalIndexed = true;
+  }
 
   function availableDays() {
     const days = (window.VOCAB_DATA && window.VOCAB_DATA.days) || {};
@@ -291,6 +308,19 @@
     return WORDS.filter(w => { const p = state.progress[w.id]; return p && p.seen && p.box < MASTER_BOX && p.due <= now; });
   }
   function wrongList() { return WORDS.filter(w => { const p = state.progress[w.id]; return p && p.wrong; }); }
+  // 跨天版本：供「复习中心」与首页统计使用
+  function dueListAll() {
+    ensureGlobalIndex();
+    const now = Date.now();
+    // 排除错题，让「到期复习」与「错题」两个桶互不重叠，便于集中管理
+    return ALL_WORDS.filter(w => { const p = state.progress[w.id]; return p && p.seen && !p.wrong && p.box < MASTER_BOX && p.due <= now; })
+      .sort((a, b) => (state.progress[a.id].due - state.progress[b.id].due));
+  }
+  function wrongListAll() {
+    ensureGlobalIndex();
+    return ALL_WORDS.filter(w => { const p = state.progress[w.id]; return p && p.wrong; })
+      .sort((a, b) => (a.day - b.day) || (a.no - b.no));
+  }
   function masteredCount() { return WORDS.filter(w => statusOf(w.id) === 'mastered').length; }
   function groupWords(g) { return WORDS.filter(w => w.group === g); }
   function groupStats(g) {
@@ -604,9 +634,9 @@
   // =====================================================================
   function viewHome() {
     $('#topTitle').textContent = currentUser ? currentUser.name + ' · Day ' + DAY : '3000词 · Day ' + DAY;
-    const due = dueList();
+    const due = dueListAll();
     const mastered = masteredCount(); const total = WORDS.length; const pct = Math.round(mastered / total * 100);
-    const wrong = wrongList();
+    const wrong = wrongListAll();
 
     app.appendChild(el(`<div class="card hero">
       <h1>Day ${DAY} · ${esc(DAYDATA.title)}</h1>
@@ -621,12 +651,12 @@
 
     if (due.length) {
       const rb = el(`<button class="action-btn"><span class="emoji">🔁</span>
-        <span class="txt"><b>复习到期词</b><span>遗忘曲线安排的复习，优先做</span></span><span class="cnt">${due.length}</span></button>`);
+        <span class="txt"><b>复习到期词</b><span>遗忘曲线安排的复习（跨天），优先做</span></span><span class="cnt">${due.length}</span></button>`);
       rb.addEventListener('click', () => runLearn(shuffle(due))); app.appendChild(rb);
     }
-    if (wrong.length) {
-      const eb = el(`<button class="action-btn"><span class="emoji">📕</span>
-        <span class="txt"><b>错题本</b><span>集中攻克猜错/答错的词</span></span><span class="cnt">${wrong.length}</span></button>`);
+    if (due.length || wrong.length) {
+      const eb = el(`<button class="action-btn"><span class="emoji">🗂️</span>
+        <span class="txt"><b>复习中心</b><span>到期复习 + 错题，集中管理</span></span><span class="cnt">${due.length + wrong.length}</span></button>`);
       eb.addEventListener('click', () => go('review')); app.appendChild(eb);
     }
 
@@ -827,7 +857,7 @@
     function next() {
       if (session.index >= total) {
         clearActiveTestSession();
-        return renderDone('考核完成', '答对 ' + session.correct + '/' + total, session.correct === total ? '全对！继续保持 🎯' : '答错的已进错题本，可去「错题本」强化。');
+        return renderDone('考核完成', '答对 ' + session.correct + '/' + total, session.correct === total ? '全对！继续保持 🎯' : '答错的已进错题，可去「复习中心」强化。');
       }
       renderTestCard(session.queue[session.index], session.index, total, ok => {
         if (ok) session.correct++;
@@ -980,7 +1010,7 @@
   }
   function renderProduceDone(result, total) {
     const passed = result.exact + result.ok;
-    const note = result.wrong ? '第 3 档已进入错题本，建议回到错题本专项攻克。' : '本轮全部达到进阶要求。';
+    const note = result.wrong ? '第 3 档已进入错题，建议到「复习中心」专项攻克。' : '本轮全部达到进阶要求。';
     renderDone('进阶完成', '通过 ' + passed + '/' + total, note);
     app.insertBefore(el(`<div class="stat-grid" style="margin:0 0 14px">
       <div class="stat"><div class="num green">${result.exact}</div><div class="lab">完全一样</div></div>
@@ -1027,18 +1057,19 @@
     const modes = summarizeHistory(week);
     const mastered = masteredCount();
     const total = WORDS.length;
-    const wrong = wrongList();
-    const due = dueList();
+    const wrong = wrongListAll();
+    const due = dueListAll();
+    ensureGlobalIndex();
     const weakIds = {};
     week.forEach(x => { if (!modePassed(x)) weakIds[x.wordId] = (weakIds[x.wordId] || 0) + 1; });
-    const repeatedWeak = Object.keys(weakIds).sort((a, b) => weakIds[b] - weakIds[a]).slice(0, 8).map(id => byId[id]).filter(Boolean);
+    const repeatedWeak = Object.keys(weakIds).sort((a, b) => weakIds[b] - weakIds[a]).slice(0, 8).map(id => allById[id] || byId[id]).filter(Boolean);
     const weakestGroup = Array.from({ length: GROUP_COUNT }, (_, i) => groupStats(i + 1))
       .sort((a, b) => (a.mastered / a.total) - (b.mastered / b.total))[0];
     const weekPass = Object.values(modes).reduce((n, m) => n + m.pass, 0);
     const weekTotal = Object.values(modes).reduce((n, m) => n + m.total, 0);
     const advice = [];
     if (due.length) advice.push('先完成 ' + due.length + ' 个到期复习词。');
-    if (wrong.length) advice.push('错题本还有 ' + wrong.length + ' 个薄弱词，建议先专项攻克。');
+    if (wrong.length) advice.push('复习中心还有 ' + wrong.length + ' 个错题薄弱词，建议先专项攻克。');
     if (modes.produce.total && pct(modes.produce.pass, modes.produce.total) < 70) advice.push('进阶输出通过率偏低，先降低速度，确保目标词、语义、语法三项都过关。');
     if (modes.test.total && pct(modes.test.pass, modes.test.total) < 80) advice.push('考核识别还不稳，建议回到强语境再过一轮。');
     if (!advice.length) advice.push('当前节奏良好，可以继续推进下一组，并保持进阶输出。');
@@ -1086,21 +1117,41 @@
       <ul class="help-list">${advice.map(x => '<li>' + esc(x) + '</li>').join('')}</ul></div>`));
   }
 
-  // ---------- 错题本 ----------
+  // ---------- 复习中心（跨天集中：到期复习 + 错题） ----------
   function viewReview() {
-    $('#topTitle').textContent = '错题本 · 薄弱词';
-    const list = wrongList();
-    if (!list.length) { renderEmpty('错题本是空的 👍', '猜错或答错的词会自动收集到这里。'); return; }
-    app.appendChild(el(`<div class="card"><div class="section-title"><span>共 ${list.length} 个薄弱词</span></div>
-      <p class="muted" style="font-size:.82rem;margin:0 2px 4px">答对一次即移出错题本。</p></div>`));
-    const listCard = el('<div class="card"></div>');
-    list.forEach(w => {
+    $('#topTitle').textContent = '复习中心';
+    const due = dueListAll();
+    const wrong = wrongListAll();
+    if (!due.length && !wrong.length) {
+      renderEmpty('暂无需要复习的词 🎉', '遗忘曲线到期词与错题会自动集中到这里。');
+      return;
+    }
+    app.appendChild(el(`<div class="card"><div class="section-title"><span>复习中心</span><span class="muted">跨天集中</span></div>
+      <div class="stat-grid" style="margin-top:4px">
+        <div class="stat"><div class="num amber">${due.length}</div><div class="lab">到期复习</div></div>
+        <div class="stat"><div class="num" style="color:#dc2626">${wrong.length}</div><div class="lab">错题</div></div></div></div>`));
+
+    if (due.length) {
+      app.appendChild(reviewSection('🔁 到期复习', '遗忘曲线安排，按到期先后排列，优先攻克',
+        due, () => runLearn(shuffle(due))));
+    }
+    if (wrong.length) {
+      app.appendChild(reviewSection('📕 错题', '猜错/答错的词，答对一次即移出',
+        wrong, () => runTest(shuffle(wrong), '错题攻克')));
+    }
+  }
+  function reviewSection(title, sub, list, onStart) {
+    const CAP = 60;
+    const card = el(`<div class="card"><div class="section-title"><span>${title}</span><span class="muted">${list.length}</span></div>
+      <p class="muted" style="font-size:.82rem;margin:0 2px 8px">${sub}</p></div>`);
+    list.slice(0, CAP).forEach(w => {
       const item = el(`<div class="wlist-item"><div><div class="w">${esc(w.word)}</div><div class="g">${esc(w.gloss)}</div></div>
-        <div class="meta"><span class="badge l${w.level}">${LEVEL_NAME[w.level]}</span></div></div>`);
-      item.addEventListener('click', () => showWordSheet(w)); listCard.appendChild(item);
+        <div class="meta"><span class="badge l${w.level}">${LEVEL_NAME[w.level]}</span><span class="muted" style="font-size:.72rem;margin-left:6px">Day ${w.day}</span></div></div>`);
+      item.addEventListener('click', () => showWordSheet(w)); card.appendChild(item);
     });
-    app.appendChild(listCard);
-    app.appendChild(mkBtn('开始专项攻克（英译中）', 'btn full', () => runTest(shuffle(list))));
+    if (list.length > CAP) card.appendChild(el(`<p class="muted" style="font-size:.78rem;text-align:center;margin:8px 0 0">仅列出前 ${CAP} 个，开始复习会覆盖全部 ${list.length} 个</p>`));
+    card.appendChild(mkBtn('开始（共 ' + list.length + ' 个）', 'btn full', onStart));
+    return card;
   }
 
   // ---------- 使用说明 ----------
@@ -1123,7 +1174,7 @@
         <li><b>新建用户</b><span>第一次打开时输入名字，系统会自动生成一个学习码。</span></li>
         <li><b>按组学习</b><span>每天 100 词分成 5 组，每组 20 词。先做自查，再进入强语境学习。</span></li>
         <li><b>完成考核</b><span>「考核」检查是否认得出词义，「进阶」训练看中文写英文。</span></li>
-        <li><b>处理错题</b><span>猜错、答错、写错的词会自动进入错题本，答对后自动移出。</span></li>
+        <li><b>集中复习</b><span>遗忘曲线到期词与错题会跨天汇集到「复习中心」，答对后自动移出。</span></li>
       </ol>
     </div>`));
 
