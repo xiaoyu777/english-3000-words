@@ -46,7 +46,7 @@
 ## 使用方式
 
 ### 方式 A：手机上直接用（推荐）
-把整个文件夹放到任意静态托管（GitHub Pages / Netlify / Vercel / 自建），手机浏览器打开 `index.html`：
+已上线，直接手机浏览器打开即可（大陆推荐国内入口 <https://english-3000-words.edgeone.dev/>）。若要自建托管，本项目是纯静态文件夹，可放到任意静态托管：**大陆用户优先腾讯云 EdgeOne Pages**（`github.io / netlify.app / vercel.app` 在大陆常被墙/很慢），海外可用 GitHub Pages / Netlify / Vercel。打开 `index.html`：
 - Safari/Chrome 菜单 →「添加到主屏幕」，即可像 App 一样全屏、离线使用。
 - 进度先存在手机本地（localStorage），联网后自动同步到 Supabase 云端。
 
@@ -103,14 +103,23 @@ English-3000-words/
 
 ## 提交后自动推送和部署
 
-**当前线上地址：** <https://xiaoyu777.github.io/english-3000-words/>（GitHub Pages，从 `main` 分支根目录发布）。
+**当前线上地址（双入口，同源自 GitHub 仓库，均随 push 自动更新）：**
+
+| 入口 | 地址 | 适用 |
+|---|---|---|
+| 🇨🇳 EdgeOne Pages（国内友好） | <https://english-3000-words.edgeone.dev/> | 大陆学生主用（`github.io` 在大陆常被墙/很慢） |
+| 🌐 GitHub Pages | <https://xiaoyu777.github.io/english-3000-words/> | 备用 / 海外访问 |
 
 本项目提供本地 Git hook：每次 `git commit` 成功后自动执行：
 
 1. 推送当前分支到 GitHub。
-2. **GitHub Pages 自动重建**——仓库为 public，Pages 源设为 `main / 根目录`，push 后自动上线，无需 token、不受计费影响。
+2. **两个 Pages 自动重建**——GitHub Pages（仓库 public、源 `main / 根目录`）与腾讯云 **EdgeOne Pages**（Import from GitHub，同一 `main` 分支）都监听该仓库，push 后各自自动上线，无需 token、不受计费影响。
 
-> 部署已从 Netlify 切换到 GitHub Pages：Netlify 账户额度耗尽导致 CLI 部署返回 `403 Account credit usage exceeded`。因此 `.githooks/post-commit` 里默认设 `AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1`，只推送 GitHub、跳过 Netlify。若日后恢复 Netlify（补足额度后），删掉那一行即可。仓库仍保留 `netlify.toml` / `.netlifyignore` 以便随时切回。
+> **部署演进**：最早用 Netlify → 因账户额度耗尽（CLI 返回 `403 Account credit usage exceeded`）切到 GitHub Pages → 又因 `github.io` 在大陆访问不稳，增加 **EdgeOne Pages** 作为国内主入口（邮箱注册免实名、直连 GitHub 自动部署；默认 `*.edgeone.dev` 域名即可，绑定**已备案域名**可启用大陆加速节点满速）。
+>
+> `.githooks/post-commit` 里默认设 `AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1`，只推送 GitHub、跳过 Netlify。若日后恢复 Netlify（补足额度后），删掉那一行即可。仓库仍保留 `netlify.toml` / `.netlifyignore` 以便随时切回。
+>
+> EdgeOne 侧构建配置：框架预设 **None/静态**、构建命令**留空**、输出目录 **`.`（根目录）**（本项目纯静态、无需构建）。EdgeOne 给 `sw.js` 的响应头为 `Cache-Control: public, max-age=0, must-revalidate`，PWA 更新可及时生效，无需额外 `edgeone.json`。
 
 启用方式：
 
