@@ -78,7 +78,7 @@ English-3000-words/
 ├── supabase.sql                # Supabase learners 表和 RLS 策略建表脚本
 ├── netlify.toml                # Netlify 静态站点发布配置
 ├── .netlifyignore              # Netlify 部署排除项（PDF、脚本、本地配置等）
-├── 【高考拔高】3000词.pdf       # 原始词表 PDF（本地留存，不随 Netlify 部署）
+├── 【高考拔高】3000词.pdf       # 原始词表 PDF（受版权，已被 .gitignore 排除，仅本地留存、不入库/不部署）
 └── README.md
 ```
 
