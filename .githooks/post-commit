@@ -3,4 +3,5 @@ repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 log_file="$repo_root/.git/auto-push-deploy.log"
 
 printf '\n--- post-commit %s ---\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "$log_file"
-sh "$repo_root/scripts/auto_push_deploy.sh" >> "$log_file" 2>&1
+# 部署改用 GitHub Pages：push 到 main 后 Pages 自动重建；跳过已失效的 Netlify CLI 部署（账户额度耗尽）
+AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1 sh "$repo_root/scripts/auto_push_deploy.sh" >> "$log_file" 2>&1
