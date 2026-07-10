@@ -1126,32 +1126,37 @@
       renderEmpty('暂无需要复习的词 🎉', '遗忘曲线到期词与错题会自动集中到这里。');
       return;
     }
-    app.appendChild(el(`<div class="card"><div class="section-title"><span>复习中心</span><span class="muted">跨天集中</span></div>
+    app.appendChild(el(`<div class="card"><div class="section-title"><span>复习中心</span><span class="muted">跨天集中 · 点某天进入复习</span></div>
       <div class="stat-grid" style="margin-top:4px">
         <div class="stat"><div class="num amber">${due.length}</div><div class="lab">到期复习</div></div>
         <div class="stat"><div class="num" style="color:#dc2626">${wrong.length}</div><div class="lab">错题</div></div></div></div>`));
 
     if (due.length) {
-      app.appendChild(reviewSection('🔁 到期复习', '遗忘曲线安排，按到期先后排列，优先攻克',
-        due, () => runLearn(shuffle(due))));
+      app.appendChild(reviewSection('🔁 到期复习', '按天列出，点某天复习那天到期的词', due, '到期词', '📅',
+        (words) => runLearn(shuffle(words))));
     }
     if (wrong.length) {
-      app.appendChild(reviewSection('📕 错题', '猜错/答错的词，答对一次即移出',
-        wrong, () => runTest(shuffle(wrong), '错题攻克')));
+      app.appendChild(reviewSection('📕 错题', '按天列出，点某天攻克那天答错的词', wrong, '错题', '📕',
+        (words, day) => runTest(shuffle(words), '错题攻克 · Day ' + day)));
     }
   }
-  function reviewSection(title, sub, list, onStart) {
-    const CAP = 60;
-    const card = el(`<div class="card"><div class="section-title"><span>${title}</span><span class="muted">${list.length}</span></div>
-      <p class="muted" style="font-size:.82rem;margin:0 2px 8px">${sub}</p></div>`);
-    list.slice(0, CAP).forEach(w => {
-      const item = el(`<div class="wlist-item"><div><div class="w">${esc(w.word)}</div><div class="g">${esc(w.gloss)}</div></div>
-        <div class="meta"><span class="badge l${w.level}">${LEVEL_NAME[w.level]}</span><span class="muted" style="font-size:.72rem;margin-left:6px">Day ${w.day}</span></div></div>`);
-      item.addEventListener('click', () => showWordSheet(w)); card.appendChild(item);
+  // 按天分组：每天一行（Day N · X 个词），点行直接进入那天的复习/攻克
+  function reviewSection(title, sub, list, unit, emoji, onStartDay) {
+    const wrap = el(`<div class="review-section">
+      <div class="section-title" style="margin-top:4px"><span>${title}</span><span class="muted">共 ${list.length}</span></div>
+      <p class="muted" style="font-size:.82rem;margin:0 2px 10px">${sub}</p></div>`);
+    const byDay = {};
+    list.forEach(w => { (byDay[w.day] = byDay[w.day] || []).push(w); });
+    Object.keys(byDay).map(Number).sort((a, b) => a - b).forEach(day => {
+      const words = byDay[day];
+      const here = day === DAY ? ' · 当前天' : '';
+      const row = el(`<button class="action-btn"><span class="emoji">${emoji}</span>
+        <span class="txt"><b>Day ${day}${here}</b><span>${words.length} 个${unit}</span></span>
+        <span class="cnt">${words.length}</span></button>`);
+      row.addEventListener('click', () => onStartDay(words, day));
+      wrap.appendChild(row);
     });
-    if (list.length > CAP) card.appendChild(el(`<p class="muted" style="font-size:.78rem;text-align:center;margin:8px 0 0">仅列出前 ${CAP} 个，开始复习会覆盖全部 ${list.length} 个</p>`));
-    card.appendChild(mkBtn('开始（共 ' + list.length + ' 个）', 'btn full', onStart));
-    return card;
+    return wrap;
   }
 
   // ---------- 使用说明 ----------
