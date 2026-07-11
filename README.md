@@ -46,7 +46,7 @@
 ## 使用方式
 
 ### 方式 A：手机上直接用（推荐）
-已上线，直接手机浏览器打开即可（大陆暂用保持最新版本的 GitHub Pages：<https://xiaoyu777.github.io/english-3000-words/>）。EdgeOne 项目的加速区域为 `Global (MLC excluded)`，不支持中国大陆网络；Netlify 免费额度已用完，线上仅保留旧版本，不得作为当前入口。若要自建稳定的大陆托管，需使用已备案域名并启用中国大陆加速区域。打开 `index.html`：
+已上线，直接手机浏览器打开即可（大陆入口：<https://xiaoyu777.github.io/english-3000-words/>，已在大陆 5G 网络实测可访问）。GitHub Pages 会跟随 `main` 分支自动更新，但不同地区和运营商的连接质量仍可能有差异。EdgeOne 项目的加速区域为 `Global (MLC excluded)`，不支持中国大陆网络；Netlify 免费额度已用完，线上仅保留旧版本，不得作为当前入口。打开 `index.html`：
 - Safari/Chrome 菜单 →「添加到主屏幕」，即可像 App 一样全屏、离线使用。
 - 进度先存在手机本地（localStorage），联网后自动同步到 Supabase 云端。
 
@@ -107,7 +107,7 @@ English-3000-words/
 
 | 入口 | 地址 | 适用 |
 |---|---|---|
-| 🇨🇳 GitHub Pages（大陆临时入口） | <https://xiaoyu777.github.io/english-3000-words/> | 跟随 `main` 自动更新；大陆线路可能较慢或不稳定 |
+| 🇨🇳 GitHub Pages（大陆入口） | <https://xiaoyu777.github.io/english-3000-words/> | 跟随 `main` 自动更新；大陆 5G 已实测可访问，不同线路可能存在差异 |
 | 🌏 EdgeOne Pages | <https://english-3000-words.edgeone.dev/> | 海外入口；当前区域排除中国大陆 |
 | ⛔ Netlify | <https://english-3000-words.netlify.app/> | 额度已用完，停止更新，仅保留旧版本 |
 
