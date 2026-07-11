@@ -46,7 +46,7 @@
 ## 使用方式
 
 ### 方式 A：手机上直接用（推荐）
-已上线，直接手机浏览器打开即可（大陆推荐国内入口 <https://english-3000-words.edgeone.dev/>）。若要自建托管，本项目是纯静态文件夹，可放到任意静态托管：**大陆用户优先腾讯云 EdgeOne Pages**（`github.io / netlify.app / vercel.app` 在大陆常被墙/很慢），海外可用 GitHub Pages / Netlify / Vercel。打开 `index.html`：
+已上线，直接手机浏览器打开即可（大陆暂用 <https://english-3000-words.netlify.app/>）。EdgeOne 项目的加速区域为 `Global (MLC excluded)`，不支持中国大陆网络；不要将默认 `*.edgeone.dev` 域名当作国内入口。若要自建稳定的大陆托管，需使用已备案域名并启用中国大陆加速区域。打开 `index.html`：
 - Safari/Chrome 菜单 →「添加到主屏幕」，即可像 App 一样全屏、离线使用。
 - 进度先存在手机本地（localStorage），联网后自动同步到 Supabase 云端。
 
@@ -103,19 +103,20 @@ English-3000-words/
 
 ## 提交后自动推送和部署
 
-**当前线上地址（双入口，同源自 GitHub 仓库，均随 push 自动更新）：**
+**当前线上地址：**
 
 | 入口 | 地址 | 适用 |
 |---|---|---|
-| 🇨🇳 EdgeOne Pages（国内友好） | <https://english-3000-words.edgeone.dev/> | 大陆学生主用（`github.io` 在大陆常被墙/很慢） |
+| 🇨🇳 Netlify（大陆临时入口） | <https://english-3000-words.netlify.app/> | 已实测可访问；大陆线路质量仍受运营商影响 |
+| 🌏 EdgeOne Pages | <https://english-3000-words.edgeone.dev/> | 海外入口；当前区域排除中国大陆 |
 | 🌐 GitHub Pages | <https://xiaoyu777.github.io/english-3000-words/> | 备用 / 海外访问 |
 
 本项目提供本地 Git hook：每次 `git commit` 成功后自动执行：
 
 1. 推送当前分支到 GitHub。
-2. **两个 Pages 自动重建**——GitHub Pages（仓库 public、源 `main / 根目录`）与腾讯云 **EdgeOne Pages**（Import from GitHub，同一 `main` 分支）都监听该仓库，push 后各自自动上线，无需 token、不受计费影响。
+2. GitHub Pages 与腾讯云 EdgeOne Pages 监听同一 `main` 分支，push 后自动重建。Netlify 当前保留已部署的生产版本，作为大陆临时入口。
 
-> **部署演进**：最早用 Netlify → 因账户额度耗尽（CLI 返回 `403 Account credit usage exceeded`）切到 GitHub Pages → 又因 `github.io` 在大陆访问不稳，增加 **EdgeOne Pages** 作为国内主入口（邮箱注册免实名、直连 GitHub 自动部署；默认 `*.edgeone.dev` 域名即可，绑定**已备案域名**可启用大陆加速节点满速）。
+> **部署演进**：最早用 Netlify → 因账户额度问题增加 GitHub Pages 和 EdgeOne Pages。EdgeOne 当前项目区域为 `Global (MLC excluded)`，因此仅作海外入口；大陆稳定服务需绑定已备案域名并使用包含中国大陆的加速区域。
 >
 > `.githooks/post-commit` 里默认设 `AUTO_PUSH_DEPLOY_SKIP_NETLIFY=1`，只推送 GitHub、跳过 Netlify。若日后恢复 Netlify（补足额度后），删掉那一行即可。仓库仍保留 `netlify.toml` / `.netlifyignore` 以便随时切回。
 >
